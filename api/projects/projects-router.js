@@ -7,6 +7,7 @@ const router = express.Router();
 const {
   validateProjectId,
   validateProjectBody,
+  validateCompleted
 } = require("./projects-middleware");
 
 router.get("/", (req, res, next) => {
@@ -29,12 +30,8 @@ router.post("/", validateProjectBody, (req, res, next) => {
     .catch(next);
 });
 
-// - [ ] `[PUT] /api/projects/:id`
-//   - Returns the updated project as the body of the response.
-//   - If there is no project with the given `id` it responds with a status code 404.
-//   - If the request body is missing any of the required fields it responds with a status code 400.
-
 router.put("/:id", validateProjectId, validateProjectBody, (req, res, next) => {
+
   Projects.update(req.params.id, req.body)
     .then((updatedProject) => {
       res.status(200).json(updatedProject);
@@ -42,4 +39,19 @@ router.put("/:id", validateProjectId, validateProjectBody, (req, res, next) => {
     .catch(next);
 });
 
+router.delete("/:id", validateProjectId, (req, res, next) => {
+  Projects.remove(req.params.id)
+    .then((deletedProject) => {
+      res.status(204).json(deletedProject);
+    })
+    .catch(next);
+});
+
+router.get("/:id/actions", validateProjectId, (req, res, next) => {
+  Projects.getProjectActions(req.params.id)
+    .then((actions) => {
+      res.status(200).json(actions);
+    })
+    .catch(next);
+});
 module.exports = router;

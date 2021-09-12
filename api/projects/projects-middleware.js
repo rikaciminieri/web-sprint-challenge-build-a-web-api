@@ -8,7 +8,10 @@ function validateProjectId(req, res, next) {
         req.project = project;
         next();
       } else {
-        next({ status: 404, message: "Project not found!!" });
+        next({
+          status: 404,
+          message: `Error 404: Project not found!!`,
+        });
       }
     })
     .catch(next);
@@ -18,11 +21,11 @@ function validateProjectBody(req, res, next) {
   if (!req.body.name || !req.body.description) {
     next({
       status: 400,
-      message: "Missing required name or description field",
-    })
+      message: "Error 400: Missing required name or description field",
+    });
   } else {
-      next()
+    next();
   }
 }
 
-module.exports = { validateProjectId, validateProjectBody };
+module.exports = { validateProjectId, validateProjectBody};
