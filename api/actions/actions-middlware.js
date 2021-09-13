@@ -8,10 +8,19 @@ function validateActionsId(req, res, next) {
         req.action = action;
         next();
       } else {
-        next({ status: 404, message: "No action found" });
+        next({ status: 404, message: "Error 404: No action found" });
       }
     })
     .catch(next);
 }
 
-module.exports = { validateActionsId };
+function validateActionsBody(req, res, next) {
+  const { project_id, description, notes } = req.body;
+  if (!project_id || !description || !notes) {
+    next({ status: 400, message: "Error 400: Missing required field(s)" });
+  } else {
+    next();
+  }
+}
+
+module.exports = { validateActionsId, validateActionsBody };

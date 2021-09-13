@@ -28,4 +28,4 @@ function validateProjectBody(req, res, next) {
   }
 }
 
-module.exports = { validateProjectId, validateProjectBody};
+module.exports = { validateProjectId, validateProjectBody };
