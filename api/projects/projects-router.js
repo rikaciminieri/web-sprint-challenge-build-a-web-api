@@ -6,8 +6,7 @@ const router = express.Router();
 
 const {
   validateProjectId,
-  validateProjectBody,
-  validateCompleted
+  validateProjectBody
 } = require("./projects-middleware");
 
 router.get("/", (req, res, next) => {
